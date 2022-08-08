@@ -11,6 +11,7 @@ import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +48,9 @@ public class MapDimension implements MapTask {
 				LOGGER.warn("Attempted to access MapManger before it's setup");
 				return null;
 			}
-			current = MapManager.inst.getDimension(Minecraft.getInstance().level.dimension());
+			ResourceKey<Level> levelDimension = Minecraft.getInstance().level.dimension();
+			if(levelDimension != null)
+				current = MapManager.inst.getDimension(levelDimension);
 		}
 
 		return current;
